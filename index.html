@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Backend Roadmap</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00ff00;
+            --primary-glow: #00ff0033;
+            --secondary: #ffff00;
+            --secondary-glow: #ffff0033;
+            --dark: #0a0a0a;
+            --darker: #050505;
+            --light: #1a1a1a;
+            --text: #e0e0e0;
+            --neon-border: 0 0 5px var(--primary),
+                0 0 10px var(--primary),
+                0 0 15px var(--primary);
+            --font-heading: 'Space Grotesk', sans-serif;
+            --font-body: 'Rajdhani', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-body);
+            margin: 0;
+            padding: 40px;
+            background: var(--darker);
+            background-image:
+                linear-gradient(45deg, var(--dark) 25%, transparent 25%),
+                linear-gradient(-45deg, var(--dark) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, var(--dark) 75%),
+                linear-gradient(-45deg, transparent 75%, var(--dark) 75%);
+            background-size: 20px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.6;
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            z-index: -1;
+            animation: borderGlow 2s infinite alternate;
+        }
+
+        @keyframes borderGlow {
+            from {
+                box-shadow: var(--neon-border);
+            }
+
+            to {
+                box-shadow: none;
+            }
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--primary);
+            letter-spacing: 3px;
+            position: relative;
+            animation: titleGlow 1.5s infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            from {
+                text-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary);
+            }
+
+            to {
+                text-shadow: 0 0 20px var(--primary), 0 0 30px var(--primary);
+            }
+        }
+
+        h2 {
+            font-size: 2.2em;
+            color: var(--secondary);
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: var(--primary);
+            margin: 30px 0 15px;
+        }
+
+        .schedule-block {
+            background: var(--dark);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.1);
+            margin-bottom: 30px;
+            border: 1px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .schedule-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, var(--primary-glow), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .time-block {
+            background: var(--light);
+            padding: 20px;
+            border-left: 5px solid var(--primary);
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .highlight {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid var(--secondary);
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 10px 0;
+            font-size: 1.1em;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        li::before {
+            content: "→";
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+        }
+
+        .important {
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        .note {
+            background: var(--light);
+            padding: 20px;
+            border-left: 5px solid var(--secondary);
+            margin: 20px 0;
+        }
+
+        strong {
+            color: var(--primary);
+        }
+
+        /* Hover effects */
+        .schedule-block:hover {
+            box-shadow: 0 5px 25px rgba(0, 255, 0, 0.2);
+            transform: translateY(-2px);
+            transition: all 0.3s ease;
+        }
+
+        .time-block:hover {
+            border-left-color: var(--secondary);
+            transition: all 0.3s ease;
+        }
+
+        /* Glowing effect for important elements */
+        .important:hover {
+            text-shadow: 0 0 5px var(--secondary);
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 20px 0;
+            background: var(--dark);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px var(--primary-glow);
+            position: relative;
+            animation: tableGlow 3s infinite alternate;
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+
+        th {
+            background: var(--light);
+            color: var(--primary);
+            font-size: 1.4em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 22px;
+            border-bottom: 2px solid var(--primary);
+            text-shadow: 0 0 5px var(--primary);
+        }
+
+        td {
+            padding: 18px 22px;
+            border-bottom: 1px solid rgba(0, 255, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        tr:hover td {
+            background: var(--light);
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary-glow);
+            transform: scale(1.01);
+            transition: all 0.3s ease;
+        }
+
+        td ul li {
+            font-size: 1.2em;
+            padding: 8px 0 8px 25px;
+            font-weight: 500;
+        }
+
+        /* Glowing dots decoration */
+        .glow-dot {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary);
+            animation: glowPulse 2s infinite;
+        }
+
+        @keyframes glowPulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.5);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Tech lines decoration */
+        .tech-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .tech-lines::before,
+        .tech-lines::after {
+            content: '';
+            position: absolute;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            height: 1px;
+            width: 100%;
+            animation: lineScan 3s infinite;
+        }
+
+        @keyframes lineScan {
+            0% {
+                transform: translateY(-100%);
+            }
+
+            100% {
+                transform: translateY(100%);
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 5px;
+            box-shadow: 0 0 5px var(--primary);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2.5em;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+                font-size: 1.1em;
+            }
+
+            .logo {
+                font-size: 18px;
+                padding: 8px 15px;
+            }
+
+            th {
+                font-size: 1.3em;
+            }
+
+            td {
+                padding: 15px 18px;
+            }
+
+            td ul li {
+                font-size: 1.1em;
+            }
+        }
+
+        /* Smaller phones */
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 2em;
+                margin-bottom: 30px;
+            }
+
+            h2 {
+                font-size: 1.8em;
+            }
+
+            .logo {
+                font-size: 16px;
+                padding: 6px 12px;
+                top: 8px;
+                right: 8px;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .logo.dissolve {
+                animation: shatter 0.5s ease-out forwards;
+            }
+
+            .logo.dissolve::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: inherit;
+                filter: blur(2px);
+                opacity: 0;
+            }
+
+            /* Particle effect */
+            .logo.dissolve::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 100%;
+                height: 100%;
+                background: var(--primary);
+                transform: translate(-50%, -50%);
+                animation: particles 0.5s ease-out forwards;
+            }
+
+            .schedule-block {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+
+            table {
+                font-size: 1em;
+            }
+
+            th {
+                font-size: 1.2em;
+                padding: 12px;
+            }
+
+            td {
+                padding: 10px;
+            }
+
+            td ul li {
+                font-size: 1em;
+                padding: 6px 0 6px 20px;
+            }
+
+            td ul li::before {
+                font-size: 0.9em;
+            }
+
+            /* Column widths for mobile */
+            table th:nth-child(1),
+            table td:nth-child(1) {
+                width: 20%;
+                /* Phần */
+            }
+
+            table th:nth-child(2),
+            table td:nth-child(2) {
+                width: 25%;
+                /* Chủ đề */
+            }
+
+            table th:nth-child(3),
+            table td:nth-child(3) {
+                width: 15%;
+                /* Độ khó */
+            }
+
+            table th:nth-child(4),
+            table td:nth-child(4) {
+                width: 40%;
+                /* Nội dung */
+            }
+
+            /* Better table scrolling */
+            .schedule-block {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            /* Custom scrollbar for mobile */
+            ::-webkit-scrollbar {
+                width: 5px;
+                height: 5px;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                border-radius: 3px;
+            }
+
+            /* Enhance touch targets */
+            td ul li {
+                min-height: 44px;
+                /* Minimum touch target size */
+                display: flex;
+                align-items: center;
+            }
+
+            /* Add scroll indicator */
+            .schedule-block::after {
+                content: '← Scroll →';
+                display: block;
+                text-align: center;
+                color: var(--primary);
+                font-size: 0.9em;
+                padding: 10px 0;
+                animation: pulse 2s infinite;
+            }
+
+            @keyframes pulse {
+                0% {
+                    opacity: 0.5;
+                }
+
+                50% {
+                    opacity: 1;
+                }
+
+                100% {
+                    opacity: 0.5;
+                }
+            }
+
+            /* Card layout for tables on mobile */
+            table,
+            thead,
+            tbody,
+            tr,
+            th,
+            td {
+                display: block;
+            }
+
+            thead {
+                display: none;
+                /* Hide table headers */
+            }
+
+            tr {
+                margin-bottom: 20px;
+                background: var(--dark);
+                border: 1px solid var(--primary);
+                border-radius: 10px;
+                overflow: hidden;
+                box-shadow: 0 0 10px var(--primary-glow);
+            }
+
+            td {
+                padding: 12px 15px;
+                position: relative;
+                padding-left: 40%;
+                text-align: left;
+                min-height: 40px;
+                display: flex;
+                align-items: center;
+            }
+
+            /* Add labels */
+            td:nth-child(1):before {
+                content: "Phần:";
+            }
+
+            td:nth-child(2):before {
+                content: "Chủ đề:";
+            }
+
+            td:nth-child(3):before {
+                content: "Độ khó:";
+            }
+
+            td:nth-child(4):before {
+                content: "Nội dung:";
+            }
+
+            td:before {
+                content: attr(data-label);
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 35%;
+                padding: 12px 15px;
+                font-weight: 700;
+                color: var(--primary);
+                text-align: left;
+                font-family: var(--font-heading);
+            }
+
+            /* Reset widths */
+            td,
+            th {
+                width: 100% !important;
+            }
+
+            /* Adjust content column */
+            td:last-child {
+                padding-left: 15px;
+                padding-top: 25px;
+                margin-top: 12px;
+                display: block;
+            }
+
+            td ul {
+                margin-top: 8px;
+            }
+
+            td ul li {
+                padding: 8px 0 8px 25px;
+                min-height: 35px;
+            }
+
+            /* Star rating adjustment */
+            td:nth-child(3) {
+                justify-content: flex-start;
+            }
+
+            /* Remove scroll indicator */
+            .schedule-block::after {
+                display: none;
+            }
+
+            /* Card hover effect */
+            tr:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px var(--primary-glow);
+                transition: all 0.3s ease;
+            }
+
+            /* Adjust schedule block */
+            .schedule-block {
+                overflow-x: visible;
+                padding: 15px;
+            }
+
+            /* Content spacing adjustments */
+            td:last-child {
+                padding-left: 15px;
+                padding-top: 25px;
+                margin-top: 12px;
+                display: block;
+            }
+
+            td ul {
+                margin-top: 8px;
+            }
+
+            /* Label positioning */
+            td:before {
+                padding: 8px 15px;
+                width: 30%;
+                font-size: 0.95em;
+                height: auto;
+                min-height: 35px;
+                display: flex;
+                align-items: center;
+                background: rgba(0, 255, 0, 0.05);
+                border-right: 1px solid rgba(0, 255, 0, 0.2);
+            }
+
+            /* Specifically for content label */
+            td:nth-child(4):before {
+                padding-bottom: 12px;
+            }
+
+            /* Dissolve effect on scroll */
+            .logo.dissolve {
+                opacity: 0;
+                transform: scale(0.8) rotate(5deg);
+                filter: blur(5px);
+                pointer-events: none;
+            }
+        }
+
+        /* Landscape mode */
+        @media (max-width: 768px) and (orientation: landscape) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                margin-bottom: 20px;
+            }
+
+            .schedule-block {
+                margin-bottom: 15px;
+            }
+        }
+
+        /* Enhanced Logo */
+        .logo {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+            padding: 12px 20px;
+            background: rgba(10, 10, 10, 0.9);
+            border: 1px solid var(--primary);
+            border-radius: 12px;
+            box-shadow:
+                0 0 10px var(--primary-glow),
+                inset 0 0 20px rgba(0, 255, 0, 0.2);
+            backdrop-filter: blur(8px);
+            letter-spacing: 1px;
+            transform-style: preserve-3d;
+            transition: all 0.3s ease, opacity 0.5s ease;
+            animation: logoGlow 2s infinite alternate;
+            clip-path: polygon(0 15%, 15% 0,
+                    85% 0, 100% 15%,
+                    100% 85%, 85% 100%,
+                    15% 100%, 0 85%);
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg,
+                    var(--primary),
+                    transparent 40%,
+                    transparent 60%,
+                    var(--secondary));
+            clip-path: polygon(0 15%, 15% 0,
+                    85% 0, 100% 15%,
+                    100% 85%, 85% 100%,
+                    15% 100%, 0 85%);
+            z-index: -1;
+            animation: borderRotate 3s linear infinite;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            background: rgba(10, 10, 10, 0.9);
+            clip-path: polygon(0 15%, 15% 0,
+                    85% 0, 100% 15%,
+                    100% 85%, 85% 100%,
+                    15% 100%, 0 85%);
+            z-index: -1;
+        }
+
+        /* Corner decorations */
+        .logo .corner {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .logo .corner:nth-child(1) {
+            top: 0;
+            left: 15%;
+        }
+
+        .logo .corner:nth-child(2) {
+            top: 0;
+            right: 15%;
+        }
+
+        .logo .corner:nth-child(3) {
+            bottom: 0;
+            left: 15%;
+        }
+
+        .logo .corner:nth-child(4) {
+            bottom: 0;
+            right: 15%;
+        }
+
+        @keyframes borderRotate {
+            0% {
+                filter: hue-rotate(0deg);
+            }
+
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
+
+        .logo:hover {
+            transform: scale(1.05) translateZ(10px);
+            box-shadow:
+                0 0 20px var(--primary-glow),
+                inset 0 0 30px rgba(0, 255, 0, 0.3);
+        }
+
+        .logo:hover::before {
+            animation: borderRotate 1s linear infinite;
+        }
+
+        .logo span {
+            color: var(--primary);
+            text-shadow:
+                0 0 5px var(--primary),
+                0 0 10px var(--primary),
+                0 0 15px var(--primary);
+            animation: textPulse 1.5s infinite alternate;
+        }
+
+        @keyframes logoGlow {
+            from {
+                box-shadow:
+                    0 0 10px var(--primary-glow),
+                    inset 0 0 20px rgba(0, 255, 0, 0.2);
+            }
+
+            to {
+                box-shadow:
+                    0 0 20px var(--primary-glow),
+                    inset 0 0 30px rgba(0, 255, 0, 0.3);
+            }
+        }
+
+        @keyframes textPulse {
+            from {
+                text-shadow:
+                    0 0 5px var(--primary),
+                    0 0 10px var(--primary);
+            }
+
+            to {
+                text-shadow:
+                    0 0 10px var(--primary),
+                    0 0 20px var(--primary),
+                    0 0 30px var(--primary);
+            }
+        }
+
+        /* Enhanced table styles */
+        @keyframes tableGlow {
+            from {
+                box-shadow:
+                    0 0 20px var(--primary-glow),
+                    inset 0 0 30px rgba(0, 255, 0, 0.1);
+            }
+
+            to {
+                box-shadow:
+                    0 0 30px var(--primary-glow),
+                    inset 0 0 50px rgba(0, 255, 0, 0.2);
+            }
+        }
+
+        .logo .hoc {
+            color: #e0e0e0;
+            text-shadow:
+                0 0 5px rgba(255, 255, 255, 0.5),
+                0 0 10px rgba(255, 255, 255, 0.3),
+                0 0 15px rgba(255, 255, 255, 0.2);
+            animation: textPulseWhite 1.5s infinite alternate;
+        }
+
+        .logo .it {
+            color: var(--secondary);
+            text-shadow:
+                0 0 5px var(--secondary),
+                0 0 10px var(--secondary),
+                0 0 15px var(--secondary);
+            animation: textPulseYellow 1.5s infinite alternate;
+        }
+
+        @keyframes textPulseWhite {
+            from {
+                color: #e0e0e0;
+                text-shadow:
+                    0 0 5px rgba(255, 255, 255, 0.3),
+                    0 0 10px rgba(255, 255, 255, 0.2);
+            }
+
+            to {
+                color: #ffffff;
+                text-shadow:
+                    0 0 10px rgba(255, 255, 255, 0.4),
+                    0 0 20px rgba(255, 255, 255, 0.3),
+                    0 0 30px rgba(255, 255, 255, 0.2);
+            }
+        }
+
+        @keyframes textPulseYellow {
+            from {
+                text-shadow:
+                    0 0 5px var(--secondary),
+                    0 0 10px var(--secondary);
+            }
+
+            to {
+                text-shadow:
+                    0 0 10px var(--secondary),
+                    0 0 20px var(--secondary),
+                    0 0 30px var(--secondary);
+            }
+        }
+
+        /* Table text alignment and spacing */
+        th,
+        td {
+            text-align: center;
+            /* Căn giữa text */
+            vertical-align: middle;
+            /* Căn giữa theo chiều dọc */
+        }
+
+        /* Nội dung column được căn trái */
+        td:last-child {
+            text-align: left;
+        }
+
+        /* List styling */
+        td ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        td ul li {
+            font-size: 1.2em;
+            position: relative;
+            padding: 8px 0 8px 25px;
+            /* Tăng padding-left để tạo khoảng cách với mũi tên */
+            text-align: left;
+        }
+
+        td ul li::before {
+            content: "→";
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            margin-right: 10px;
+            /* Thêm khoảng cách giữa mũi tên và text */
+        }
+
+        /* Column widths */
+        table th:nth-child(1),
+        table td:nth-child(1) {
+            width: 15%;
+            /* Phần */
+        }
+
+        table th:nth-child(2),
+        table td:nth-child(2) {
+            width: 25%;
+            /* Chủ đề */
+        }
+
+        table th:nth-child(3),
+        table td:nth-child(3) {
+            width: 15%;
+            /* Độ khó */
+        }
+
+        table th:nth-child(4),
+        table td:nth-child(4) {
+            width: 45%;
+            /* Nội dung */
+        }
+
+        /* Star rating alignment */
+        td:nth-child(3) {
+            font-size: 1.3em;
+            letter-spacing: 3px;
+        }
+
+        /* Contact section styles */
+        .contact-section {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 25px;
+            background: rgba(0, 255, 0, 0.02);
+            border-radius: 12px;
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.1);
+        }
+
+        .contact-section h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .contact-container {
+            display: grid;
+            gap: 12px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: var(--dark);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.2s ease;
+        }
+
+        .contact-item i {
+            font-size: 1.2em;
+            color: var(--primary);
+            opacity: 0.9;
+        }
+
+        .contact-item span {
+            font-size: 1em;
+            letter-spacing: 0.5px;
+        }
+
+        .contact-item:hover {
+            transform: translateX(5px);
+            border-color: var(--primary);
+            background: rgba(0, 255, 0, 0.05);
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
+        }
+
+        .contact-item:hover i {
+            opacity: 1;
+        }
+
+        @media (max-width: 480px) {
+            .contact-section {
+                margin: 30px 15px;
+                padding: 20px;
+            }
+
+            .contact-section h2 {
+                font-size: 1.3em;
+            }
+
+            .contact-item {
+                padding: 10px 14px;
+            }
+
+            .contact-item span {
+                font-size: 0.9em;
+            }
+        }
+
+        @keyframes shatter {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+                filter: blur(0);
+            }
+
+            20% {
+                transform: scale(1.1) rotate(2deg);
+            }
+
+            40% {
+                transform: scale(0.9) rotate(-2deg);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(0.5) rotate(5deg);
+                filter: blur(10px);
+            }
+        }
+
+        @keyframes particles {
+            0% {
+                clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
+                opacity: 1;
+            }
+
+            50% {
+                clip-path: polygon(50% 0%, 100% 50%,
+                        50% 100%, 0% 50%,
+                        60% 40%, 40% 60%,
+                        40% 40%, 60% 60%);
+                opacity: 0.5;
+            }
+
+            100% {
+                clip-path: polygon(0% 0%, 100% 0%,
+                        100% 100%, 0% 100%,
+                        25% 25%, 75% 75%,
+                        25% 75%, 75% 25%);
+                opacity: 0;
+            }
+        }
+
+        /* Add particle elements with JavaScript */
+        .particle {
+            position: absolute;
+            background: var(--primary);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        /* Styling cho cột Phần */
+        td:first-child {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 1.1em;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px var(--primary-glow);
+            background: rgba(0, 255, 0, 0.03);
+            border-right: 2px solid var(--primary);
+        }
+
+        /* Hover effect */
+        td:first-child:hover {
+            background: rgba(0, 255, 0, 0.05);
+            transform: scale(1.02);
+            transition: all 0.3s ease;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 480px) {
+            td:first-child {
+                font-size: 1em;
+                letter-spacing: 0.5px;
+                background: rgba(0, 255, 0, 0.02);
+            }
+
+            td:first-child:before {
+                content: "Phần:";
+                color: var(--secondary);
+                font-size: 0.9em;
+                opacity: 0.8;
+                margin-right: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="#" class="logo">
+        <div class="corner"></div>
+        <div class="corner"></div>
+        <div class="corner"></div>
+        <div class="corner"></div>
+        Tgrey.<span class="hoc">hoc</span>.<span class="it">IT</span>
+    </a>
+    <div class="roadmap">
+        <h1>🚀 Java Backend Developer Roadmap</h1>
+
+        <!-- Level 1: Java Core -->
+        <div class="schedule-block">
+            <div class="tech-lines"></div>
+            <h2>🚀 LEVEL 1: JAVA CORE</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Phần</th>
+                        <th>Chủ đề</th>
+                        <th>Độ khó</th>
+                        <th>Nội dung</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Foundation</td>
+                        <td>Nền tảng Java</td>
+                        <td>⭐</td>
+                        <td>
+                            <ul>
+                                <li>Cài đặt môi trường</li>
+                                <li>Biến và kiểu dữ liệu</li>
+                                <li>Toán tử và điều kiện</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>OOP</td>
+                        <td>Lập trình hướng đối tượng</td>
+                        <td>⭐⭐</td>
+                        <td>
+                            <ul>
+                                <li>Class và Object</li>
+                                <li>Tính đóng gói</li>
+                                <li>Kế thừa và đa hình</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Exception</td>
+                        <td>Xử lý ngoại lệ</td>
+                        <td>⭐⭐</td>
+                        <td>
+                            <ul>
+                                <li>Try-catch-finally</li>
+                                <li>Custom Exception</li>
+                                <li>Best Practices</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Level 2: Database -->
+        <div class="schedule-block">
+            <div class="tech-lines"></div>
+            <h2>💾 LEVEL 2: DATABASE & JDBC</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Phần</th>
+                        <th>Chủ đề</th>
+                        <th>Độ khó</th>
+                        <th>Nội dung</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>SQL</td>
+                        <td>Cơ sở dữ liệu</td>
+                        <td>⭐⭐</td>
+                        <td>
+                            <ul>
+                                <li>Tạo và quản lý Database</li>
+                                <li>Truy vấn cơ bản</li>
+                                <li>Join Tables</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>JDBC</td>
+                        <td>Kết nối Database</td>
+                        <td>⭐⭐⭐</td>
+                        <td>
+                            <ul>
+                                <li>Connection Pool</li>
+                                <li>PreparedStatement</li>
+                                <li>Transaction</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Level 3: Spring Boot -->
+        <div class="schedule-block">
+            <div class="tech-lines"></div>
+            <h2>🌱 LEVEL 3: SPRING BOOT & REST API</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Phần</th>
+                        <th>Chủ đề</th>
+                        <th>Độ khó</th>
+                        <th>Nội dung</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Core</td>
+                        <td>Spring Boot Cơ bản</td>
+                        <td>⭐⭐⭐</td>
+                        <td>
+                            <ul>
+                                <li>Maven & Dependencies</li>
+                                <li>Spring Boot Starter</li>
+                                <li>Properties & Profiles</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>REST</td>
+                        <td>REST API</td>
+                        <td>⭐⭐⭐⭐</td>
+                        <td>
+                            <ul>
+                                <li>Controllers & Endpoints</li>
+                                <li>Request/Response handling</li>
+                                <li>Exception handling</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>MVC</td>
+                        <td>Spring MVC</td>
+                        <td>⭐⭐⭐⭐</td>
+                        <td>
+                            <ul>
+                                <li>Thymeleaf templates</li>
+                                <li>Form handling</li>
+                                <li>Validation</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Level 4: Advanced -->
+        <div class="schedule-block">
+            <div class="tech-lines"></div>
+            <h2>⚡ LEVEL 4: ADVANCED TOPICS</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Phần</th>
+                        <th>Chủ đề</th>
+                        <th>Độ khó</th>
+                        <th>Nội dung</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Security</td>
+                        <td>Spring Security</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                        <td>
+                            <ul>
+                                <li>Authentication & Authorization</li>
+                                <li>JWT Implementation</li>
+                                <li>OAuth2</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Data</td>
+                        <td>Spring Data JPA</td>
+                        <td>⭐⭐⭐⭐</td>
+                        <td>
+                            <ul>
+                                <li>Entity Relationships</li>
+                                <li>Repository Pattern</li>
+                                <li>Custom Queries</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Testing</td>
+                        <td>Unit Testing</td>
+                        <td>⭐⭐⭐</td>
+                        <td>
+                            <ul>
+                                <li>JUnit & Mockito</li>
+                                <li>Integration Testing</li>
+                                <li>Test Coverage</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Example table in the content -->
+
+    </div>
+    <div class="contact-section">
+        <h2>📱 LIÊN HỆ</h2>
+        <div class="contact-container">
+            <a href="https://www.facebook.com/thanhgrey1410" class="contact-item" target="_blank">
+                <i class="fab fa-facebook"></i>
+                <span>Facebook</span>
+            </a>
+            <a href="tel:0397554756" class="contact-item">
+                <i class="fas fa-phone"></i>
+                <span>0397554756</span>
+            </a>
+            <a href="mailto:trinhdinhthanhyahoo@gmail.com" class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <span>trinhdinhthanhyahoo@gmail.com</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Add JavaScript for scroll effect (add before </body>) -->
+    <script>
+        if (window.innerWidth <= 480) {
+            const logo = document.querySelector('.logo');
+            let lastScrollTop = 0;
+
+            // Create particles
+            function createParticles() {
+                const particleCount = 10;
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    logo.appendChild(particle);
+
+                    // Random position and size
+                    const size = Math.random() * 4 + 2;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+
+                    // Animation
+                    particle.animate([
+                        {
+                            transform: 'translate(0, 0)',
+                            opacity: 1
+                        },
+                        {
+                            transform: `translate(
+                                ${(Math.random() - 0.5) * 100}px, 
+                                ${(Math.random() - 0.5) * 100}px
+                            )`,
+                            opacity: 0
+                        }
+                    ], {
+                        duration: 500,
+                        easing: 'ease-out',
+                        fill: 'forwards'
+                    });
+                }
+            }
+
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+                if (scrollTop > 50) {
+                    if (scrollTop > lastScrollTop) {
+                        logo.classList.add('dissolve');
+                        createParticles();
+                    } else {
+                        logo.classList.remove('dissolve');
+                    }
+                } else {
+                    logo.classList.remove('dissolve');
+                }
+
+                lastScrollTop = scrollTop;
+            });
+        }
+    </script>
+</body>
+
+</html>
